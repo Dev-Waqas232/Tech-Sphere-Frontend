@@ -19,4 +19,14 @@ const signupSchema = Yup.object().shape({
   ),
 });
 
-export { signupSchema };
+const signinSchema = Yup.object().shape({
+  email: Yup.string()
+    .trim()
+    .email("Please enter a valid email")
+    .required("Please enter a valid email"),
+  password: Yup.string()
+    .min(6, "Password must contain at least 6 characters")
+    .required("Password must contain at least 6 characters"),
+});
+
+export { signupSchema, signinSchema };
