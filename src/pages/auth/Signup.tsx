@@ -4,13 +4,22 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { motion } from "framer-motion";
 
 import { signupSchema } from "../../utils/validationSchemas";
+import { useSignupMutation } from "../../features/auth/authApi";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { setCredentials } from "../../features/auth/authSlice";
+import { ApiResponseError } from "../../types";
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showconfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [signup, { isLoading }] = useSignupMutation();
+  const dispatch = useDispatch<AppDispatch>();
+
   return (
-    <div className="flex flex-col mt-8 mb-8 bg-secondary rounded-lg px-8 py-8 md:w-1/2">
+    <div className="flex flex-col mt-8 mb-8 bg-secondary rounded-lg px-8 py-8 md:w-1/2 w-full">
       <h2 className="font-secondary font-semibold text-2xl text-main">
         TechSphere
       </h2>
@@ -25,8 +34,34 @@ export default function Signup() {
           confirm_password: "",
         }}
         validationSchema={signupSchema}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={async (values) => {
+          try {
+            const response = await signup({
+              username: values.username,
+              email: values.email,
+              password: values.password,
+            }).unwrap();
+            if (response.ok) {
+              toast.success(response.message);
+              dispatch(
+                setCredentials({
+                  token: response.data!.token,
+                  user: response.data!.user,
+                })
+              );
+            }
+          } catch (error: unknown) {
+            if (
+              error &&
+              typeof error === "object" &&
+              "data" in error &&
+              (error as ApiResponseError).data
+            ) {
+              toast.error((error as ApiResponseError).data.message);
+            } else {
+              toast.error("An unknown error occurred");
+            }
+          }
         }}
       >
         {({ errors, touched }) => (
@@ -117,9 +152,10 @@ export default function Signup() {
                 initial={{ scale: 1 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
+                disabled={isLoading}
                 className="bg-main text-white px-12 w-full py-2 rounded-md"
               >
-                Sign up
+                {!isLoading ? "Sign up" : "Loading..."}
               </motion.button>
             </div>
           </Form>
