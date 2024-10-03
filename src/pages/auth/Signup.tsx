@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
+import { motion } from "framer-motion";
 
 import { signupSchema } from "../../utils/validationSchemas";
-import { useState } from "react";
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,7 +15,7 @@ export default function Signup() {
         TechSphere
       </h2>
       <p className="font-primary text-sm text-gray-700">
-        Please create your acount to continue
+        Please create your account to continue
       </p>
       <Formik
         initialValues={{
@@ -61,7 +62,9 @@ export default function Signup() {
                   id="password"
                   className="px-3 py-2 rounded-md focus:outline-none focus:border-2 focus:border-main w-full"
                 />
-                <button
+                <motion.button
+                  initial={{ opacity: 1 }}
+                  whileTap={{ opacity: 0.5 }}
                   type="button"
                   className="absolute right-5"
                   onClick={() => setShowPassword((prevState) => !prevState)}
@@ -71,7 +74,7 @@ export default function Signup() {
                   ) : (
                     <FaRegEyeSlash size={20} />
                   )}
-                </button>
+                </motion.button>
               </div>
 
               {errors.password && touched.password ? (
@@ -87,7 +90,9 @@ export default function Signup() {
                   type={showconfirmPassword ? "text" : "password"}
                   className="px-3 py-2 rounded-md focus:outline-none focus:border-2 focus:border-main w-full"
                 />
-                <button
+                <motion.button
+                  initial={{ opacity: 1 }}
+                  whileTap={{ opacity: 0.5 }}
                   type="button"
                   className="absolute right-5"
                   onClick={() =>
@@ -99,7 +104,7 @@ export default function Signup() {
                   ) : (
                     <FaRegEyeSlash size={20} />
                   )}
-                </button>
+                </motion.button>
               </div>
               {errors.confirm_password && touched.confirm_password ? (
                 <div className="text-red-700 text-sm">
@@ -108,12 +113,14 @@ export default function Signup() {
               ) : null}
             </div>
             <div className="flex justify-center items-center">
-              <button
+              <motion.button
+                initial={{ scale: 1 }}
+                whileTap={{ scale: 0.98 }}
                 type="submit"
                 className="bg-main text-white px-12 w-full py-2 rounded-md"
               >
                 Sign up
-              </button>
+              </motion.button>
             </div>
           </Form>
         )}
