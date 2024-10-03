@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { setCredentials } from "../../features/auth/authSlice";
 import { ApiResponseError } from "../../types";
+import { Link } from "react-router-dom";
 
 export default function Signin() {
   const [showPassword, setShowPassword] = useState(false);
@@ -101,16 +102,20 @@ export default function Signin() {
                 <div className="text-red-700 text-sm">{errors.password}</div>
               ) : null}
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex flex-col justify-center items-center gap-4">
               <motion.button
                 initial={{ scale: 1 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={isLoading}
-                className="bg-main text-white px-12 w-full py-2 rounded-md"
+                className="bg-main mt-2 text-white px-12 w-full py-2 rounded-md"
               >
                 {!isLoading ? "Sign in" : "Loading..."}
               </motion.button>
+              <Link to="/auth/signup" className="text-sm">
+                Don't have an account?{" "}
+                <span className="text-main italic">Sign up</span> Now
+              </Link>
             </div>
           </Form>
         )}
