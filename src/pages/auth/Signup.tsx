@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { setCredentials } from "../../features/auth/authSlice";
 import { ApiResponseError } from "../../types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +18,7 @@ export default function Signup() {
 
   const [signup, { isLoading }] = useSignupMutation();
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col mt-8 mb-8 bg-secondary rounded-lg px-8 py-8 md:w-1/2 w-full">
@@ -50,6 +51,11 @@ export default function Signup() {
                   user: response.data!.user,
                 })
               );
+              if (response.data!.user.isAdmin) {
+                navigate("/admin/dashboard");
+              } else {
+                navigate("/");
+              }
             }
           } catch (error: unknown) {
             if (
