@@ -1,18 +1,15 @@
 import { Formik, Form, Field } from "formik";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 import { productSchema } from "../../utils/validationSchemas";
-import { useSignupMutation } from "../../features/auth/authApi";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store";
 import { ApiResponseError } from "../../types";
-import { useNavigate } from "react-router-dom";
 import { CATEGORIES } from "../../constants";
+import { useAddProductMutation } from "../../features/products/productApi";
 
 export default function AddProduct() {
-  const [signup, { isLoading }] = useSignupMutation();
-  const dispatch = useDispatch<AppDispatch>();
+  const [addProduct, { isLoading }] = useAddProductMutation();
   const navigate = useNavigate();
 
   return (
@@ -33,39 +30,32 @@ export default function AddProduct() {
         }}
         validationSchema={productSchema}
         onSubmit={async (values) => {
-          console.log(values);
-          //   try {
-          //     const response = await signup({
-          //       username: values.username,
-          //       email: values.email,
-          //       password: values.password,
-          //     }).unwrap();
-          //     if (response.ok) {
-          //       toast.success(response.message);
-          //       dispatch(
-          //         setCredentials({
-          //           token: response.data!.token,
-          //           user: response.data!.user,
-          //         })
-          //       );
-          //       if (response.data!.user.isAdmin) {
-          //         navigate("/admin/dashboard");
-          //       } else {
-          //         navigate("/");
-          //       }
-          //     }
-          //   } catch (error: unknown) {
-          //     if (
-          //       error &&
-          //       typeof error === "object" &&
-          //       "data" in error &&
-          //       (error as ApiResponseError).data
-          //     ) {
-          //       toast.error((error as ApiResponseError).data.message);
-          //     } else {
-          //       toast.error("An unknown error occurred");
-          //     }
-          //   }
+          const formData = new FormData();
+          formData.append("title", values.title);
+          formData.append("description", values.description);
+          formData.append("price", values.price);
+          formData.append("image", values.image!);
+          formData.append("category", values.category);
+
+          try {
+            const response = await addProduct(formData).unwrap();
+            if (response.ok) {
+              toast.success(response.message);
+              navigate("/admin/products");
+            }
+          } catch (error: unknown) {
+            console.log(error);
+            if (
+              error &&
+              typeof error === "object" &&
+              "data" in error &&
+              (error as ApiResponseError).data
+            ) {
+              toast.error((error as ApiResponseError).data.message);
+            } else {
+              toast.error("An unknown error occurred");
+            }
+          }
         }}
       >
         {({ errors, touched, setFieldValue }) => (
