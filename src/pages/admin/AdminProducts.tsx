@@ -1,10 +1,13 @@
 import { CiFilter } from "react-icons/ci";
 import { IoIosAdd } from "react-icons/io";
+import {useNavigate} from "react-router-dom"
 
 import AdminTopbar from "../../components/AdminTopbar";
 import AdminLayout from "./AdminLayout";
 
 export default function AdminProducts() {
+  const navigate = useNavigate()
+
   return (
     <AdminLayout>
       <AdminTopbar title="Products"></AdminTopbar>
@@ -19,7 +22,7 @@ export default function AdminProducts() {
                 <CiFilter size={18} />
                 Filter
               </button>
-              <button className="flex items-center gap-1 text-white text-sm bg-main py-2 px-3 rounded-md">
+              <button className="flex items-center gap-1 text-white text-sm bg-main py-2 px-3 rounded-md" onClick={()=>navigate("/admin/add-product")}>
                 <IoIosAdd size={18} />
                 Add
               </button>
