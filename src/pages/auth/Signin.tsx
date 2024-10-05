@@ -20,7 +20,7 @@ export default function Signin() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col mt-8 mb-8 bg-secondary rounded-lg px-8 py-8 md:w-1/2 w-full">
+    <div className="flex flex-col mt-8 mb-8 bg-primary rounded-lg px-8 py-8 md:w-1/2 w-full">
       <h2 className="font-secondary font-semibold text-2xl text-main">
         TechSphere
       </h2>
@@ -74,7 +74,7 @@ export default function Signin() {
               <Field
                 name="email"
                 id="email"
-                className="px-3 py-2 rounded-md focus:outline-none focus:border-2 focus:border-main"
+                className="px-3 py-2 bg-gray-200 rounded-md focus:outline-none focus:border-2 focus:border-main"
               />
               {errors.email && touched.email ? (
                 <div className="text-red-700 text-sm">{errors.email}</div>
@@ -87,7 +87,7 @@ export default function Signin() {
                   name="password"
                   type={showPassword ? "text" : "password"}
                   id="password"
-                  className="px-3 py-2 rounded-md focus:outline-none focus:border-2 focus:border-main w-full"
+                  className="px-3 py-2 bg-gray-200 rounded-md focus:outline-none focus:border-2 focus:border-main w-full"
                 />
                 <motion.button
                   initial={{ opacity: 1 }}

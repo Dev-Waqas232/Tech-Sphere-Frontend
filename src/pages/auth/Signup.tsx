@@ -21,7 +21,7 @@ export default function Signup() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col mt-8 mb-8 bg-secondary rounded-lg px-8 py-8 md:w-1/2 w-full">
+    <div className="flex flex-col mt-8 mb-8 bg-primary rounded-lg px-8 py-8 md:w-1/2 w-full">
       <h2 className="font-secondary font-semibold text-2xl text-main">
         TechSphere
       </h2>
@@ -78,7 +78,7 @@ export default function Signup() {
               <Field
                 name="username"
                 id="username"
-                className="px-3 py-2 rounded-md focus:outline-none focus:border-2 focus:border-main"
+                className="px-3 py-2 rounded-md bg-gray-200 focus:outline-none focus:border-2 focus:border-main"
               />
               {errors.username && touched.username ? (
                 <div className="text-red-700 text-sm">{errors.username}</div>
@@ -89,7 +89,7 @@ export default function Signup() {
               <Field
                 name="email"
                 id="email"
-                className="px-3 py-2 rounded-md focus:outline-none focus:border-2 focus:border-main"
+                className="px-3 py-2 bg-gray-200 rounded-md focus:outline-none focus:border-2 focus:border-main"
               />
               {errors.email && touched.email ? (
                 <div className="text-red-700 text-sm">{errors.email}</div>
@@ -102,7 +102,7 @@ export default function Signup() {
                   name="password"
                   type={showPassword ? "text" : "password"}
                   id="password"
-                  className="px-3 py-2 rounded-md focus:outline-none focus:border-2 focus:border-main w-full"
+                  className="px-3 py-2 rounded-md bg-gray-200 focus:outline-none focus:border-2 focus:border-main w-full"
                 />
                 <motion.button
                   initial={{ opacity: 1 }}
@@ -130,7 +130,7 @@ export default function Signup() {
                   name="confirm_password"
                   id="confirm_password"
                   type={showconfirmPassword ? "text" : "password"}
-                  className="px-3 py-2 rounded-md focus:outline-none focus:border-2 focus:border-main w-full"
+                  className="px-3 py-2 rounded-md bg-gray-200 focus:outline-none focus:border-2 focus:border-main w-full"
                 />
                 <motion.button
                   initial={{ opacity: 1 }}
