@@ -12,7 +12,7 @@ export default function App() {
   return (
     <>
       <ToastContainer />
-      <main className="flex flex-col bg-primary items-center w-full min-h-[85vh]">
+      <main className="flex flex-col bg-secondary items-center w-full min-h-[85vh]">
         <Routes>
           {/* Auth Routes */}
           <Route path="/auth/signup" element={<Signup />} />

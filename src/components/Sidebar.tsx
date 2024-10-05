@@ -7,7 +7,7 @@ import { IoIosLogOut } from "react-icons/io";
 
 export default function Sidebar() {
   return (
-    <div className="bg-secondary md:px-5 px-3 py-8 min-h-screen font-primary flex flex-col justify-between">
+    <div className="bg-primary md:px-5 px-3 py-6 min-h-screen font-primary flex flex-col justify-between">
       <div>
         <div className="font-secondary text-2xl  text-main font-semibold">
           <Link to="/admin/dashboard">
