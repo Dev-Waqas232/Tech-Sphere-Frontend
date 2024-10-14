@@ -95,7 +95,11 @@ export default function AddProduct() {
                 {" "}
                 <option value="" label="Select category" />
                 {CATEGORIES.map((category) => (
-                  <option key={category} value={category} label={category} />
+                  <option
+                    key={category.name}
+                    value={category.value}
+                    label={category.name}
+                  />
                 ))}
               </Field>
               {errors.category && touched.category ? (
