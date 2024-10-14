@@ -1,16 +1,31 @@
 import { CiFilter } from "react-icons/ci";
 import { IoIosAdd } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import AdminTopbar from "../../components/AdminTopbar";
 import AdminLayout from "./AdminLayout";
 import { useGetProductsQuery } from "../../features/products/productApi";
 import { findCategory } from "../../utils/findCaetgory";
+import Pagination from "../../components/Pagination";
+import { useEffect, useState } from "react";
 
 export default function AdminProducts() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const { isLoading, data } = useGetProductsQuery({});
+  const currentPageNumber = parseInt(searchParams.get("page") || "1", 10);
+
+  const [currentPage, setCurrentPage] = useState(currentPageNumber);
+
+  const { isLoading, data } = useGetProductsQuery({
+    page: currentPage,
+    limit: 1,
+  });
+
+  useEffect(() => {
+    setSearchParams({ page: currentPage.toString() });
+    console.log("first");
+  }, [currentPage]);
 
   return (
     <AdminLayout>
@@ -65,13 +80,11 @@ export default function AdminProducts() {
         )}
 
         {data?.data?.products && (
-          <div className="mt-4 text-gray-500">
-            Showing {(data.data.meta.currentPage - 1) * 10 + 1} -{" "}
-            {data.data.meta.currentPage * 10 > data.data.meta.totalProducts
-              ? data.data.meta.totalProducts
-              : data.data.meta.currentPage * 10}{" "}
-            from {data.data.meta.totalProducts} products
-          </div>
+          <Pagination
+            currentPage={currentPage}
+            onPageChange={(page: number) => setCurrentPage(page)}
+            meta={data.data.meta}
+          />
         )}
       </section>
     </AdminLayout>

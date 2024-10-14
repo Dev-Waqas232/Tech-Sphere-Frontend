@@ -33,11 +33,13 @@ export interface Product {
   category: string;
 }
 
+export interface ProductMetaData {
+  currentPage: number;
+  totalPage: number;
+  totalProducts: number;
+}
+
 export interface GetProductsResponse {
   products: Product[];
-  meta: {
-    currentPage: number;
-    totalPage: number;
-    totalProducts: number;
-  };
+  meta: ProductMetaData;
 }
