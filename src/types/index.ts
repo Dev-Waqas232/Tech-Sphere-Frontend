@@ -23,3 +23,21 @@ export interface LoginResponse {
   user: User;
   token: string;
 }
+
+export interface Product {
+  _id: string;
+  title: string;
+  description: string;
+  price: number;
+  imageUrl: string;
+  category: string;
+}
+
+export interface GetProductsResponse {
+  products: Product[];
+  meta: {
+    currentPage: number;
+    totalPage: number;
+    totalProducts: number;
+  };
+}

@@ -1,5 +1,4 @@
 import * as Yup from "yup";
-import { CATEGORIES } from "../constants";
 
 const signupSchema = Yup.object().shape({
   username: Yup.string()
@@ -39,9 +38,7 @@ const productSchema = Yup.object().shape({
   price: Yup.number()
     .positive("Price must be greater then 0")
     .required("Price must be greater then 0"),
-  category: Yup.string()
-    .oneOf(CATEGORIES, "Please select a valid category")
-    .required("Please select a valid category"),
+  category: Yup.string().required("Please select a valid category"),
   image: Yup.mixed().required("Image is required"),
 });
 

@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "../../utils/fetchBaseQuery";
-import { ApiResponse } from "../../types";
+import { ApiResponse, GetProductsResponse } from "../../types";
 
 export const productApi = createApi({
   reducerPath: "productApi",
@@ -13,7 +13,20 @@ export const productApi = createApi({
         body: data,
       }),
     }),
+    getProducts: builder.query<
+      ApiResponse<GetProductsResponse>,
+      {
+        category?: string;
+        limit?: number;
+        page?: number;
+      }
+    >({
+      query: ({ category = "", page = 1, limit = 4 }) => ({
+        url: `/products?category=${category}&page=${page}&limit=${limit}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useAddProductMutation } = productApi;
+export const { useAddProductMutation, useGetProductsQuery } = productApi;
